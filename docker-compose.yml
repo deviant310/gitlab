@@ -1,0 +1,22 @@
+services:
+  web:
+    build:
+      context: ./
+    restart: always
+    hostname: 'localhost'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        gitlab_rails['gitlab_shell_ssh_port'] = 2022
+        gitlab_rails['gitlab_default_theme'] = 2
+    ports:
+      - '127.0.0.1:8080:80'
+      - '2022:22'
+    volumes:
+      - 'config:/etc/gitlab'
+      - 'logs:/var/log/gitlab'
+      - 'data:/var/opt/gitlab'
+
+volumes:
+  config:
+  logs:
+  data:
