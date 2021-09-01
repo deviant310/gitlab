@@ -3,13 +3,13 @@ services:
     build:
       context: ./
     restart: always
-    hostname: 'localhost'
+    hostname: 'gitlab.foobar.team'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         gitlab_rails['gitlab_shell_ssh_port'] = 2022
         gitlab_rails['gitlab_default_theme'] = 2
     ports:
-      - '127.0.0.1:8080:80'
+      - '8080:80'
       - '2022:22'
     volumes:
       - 'config:/etc/gitlab'
