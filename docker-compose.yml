@@ -1,9 +1,8 @@
 services:
   web:
-    build:
-      context: ./
+    image: gitlab/gitlab-ee:13.5.1-ee.0
     restart: always
-    hostname: 'gitlab.foobar.team'
+    hostname: 'localhost:8080'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         gitlab_rails['gitlab_shell_ssh_port'] = 2022
@@ -12,11 +11,6 @@ services:
       - '8080:80'
       - '2022:22'
     volumes:
-      - 'config:/etc/gitlab'
-      - 'logs:/var/log/gitlab'
-      - 'data:/var/opt/gitlab'
-
-volumes:
-  config:
-  logs:
-  data:
+      - './config:/etc/gitlab'
+      - './data:/var/opt/gitlab'
+      - './logs:/var/log/gitlab'

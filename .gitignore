@@ -1,2 +1,9 @@
+/config/**
+!/config/gitlab.rb
+!/config/gitlab-secrets.json
+/data/**
+!/data/backups/**
+/logs
+
 # IDE
 .idea
