@@ -2,6 +2,7 @@
 !/config/gitlab.rb
 !/config/gitlab-secrets.json
 /data/**
+!/data/backups
 !/data/backups/**
 /logs
 
