@@ -14,3 +14,4 @@ services:
       - './config:/etc/gitlab'
       - './data:/var/opt/gitlab'
       - './logs:/var/log/gitlab'
+      - './embedded:/opt/gitlab/embedded'

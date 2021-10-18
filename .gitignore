@@ -4,6 +4,9 @@
 /data/**
 !/data/backups
 !/data/backups/**
+/embedded/**
+!/embedded/service/gitlab-rails/file_hooks
+!/embedded/service/gitlab-rails/file_hooks/**
 /logs
 
 # IDE
