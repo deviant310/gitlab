@@ -3,10 +3,7 @@
 !/config/gitlab-secrets.json
 /data/**
 !/data/backups
-!/data/backups/**
-/embedded/**
-!/embedded/service/gitlab-rails/file_hooks
-!/embedded/service/gitlab-rails/file_hooks/**
+!/data/backups/*_gitlab_backup.tar
 /logs
 
 # IDE

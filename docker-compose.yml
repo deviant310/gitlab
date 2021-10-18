@@ -2,7 +2,7 @@ services:
   web:
     image: gitlab/gitlab-ee:13.5.1-ee.0
     restart: always
-    hostname: 'localhost:8080'
+    hostname: 'gitlab.local'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         gitlab_rails['gitlab_shell_ssh_port'] = 2022
@@ -13,5 +13,5 @@ services:
     volumes:
       - './config:/etc/gitlab'
       - './data:/var/opt/gitlab'
+      - './file_hooks:/opt/gitlab/embedded/service/gitlab-rails/file_hooks'
       - './logs:/var/log/gitlab'
-      - './embedded:/opt/gitlab/embedded'
