@@ -1,25 +1,63 @@
-# GitLab VCS + restore from backup
+# GitLab VCS + restore from backup + saving backup file hook
 
-## Installation
+## Installation with Docker
 
-1. Run the container
-
+1. Create `.env` file from `.env.example`, replace values if necessary.
+   ```shell
+   cp .env.example .env
+   ```
+2. Run the container
    ```shell
    docker-compose up -d
    ```
-   
-3. Restore from backup
+**NOTE:**
+Replace `gitlab_web_1` to your container name, if necessary
+3. Generate ssh keys inside the container
    ```shell
-   # Stop the processes that are connected to the database
-   docker exec -it gitlab_web_1 gitlab-ctl stop puma
-   docker exec -it gitlab_web_1 gitlab-ctl stop sidekiq
-   
-   # Run the restore
-   docker exec -it gitlab_web_1 gitlab-backup restore BACKUP=11493107454_2018_04_25_10.6.4-ce
+   docker exec -it gitlab-web-1 ssh-keygen -q -t rsa -N '' -f /var/opt/gitlab/.ssh/id_rsa -C root@gitlab_web
    ```
-4. Reconfigure and restart your build
+4. Add generated public key to authorized_keys on your host
+   ```shell
+   docker exec -it gitlab-web-1 "cat /var/opt/gitlab/.ssh/id_rsa.pub" >> ~/.ssh/authorized_keys
+   ```
+   
+5. Reconfigure gitlab and restart your container
 
    ```shell
    docker exec -it gitlab_web_1 gitlab-ctl reconfigure
    docker restart gitlab_web_1
    ```
+
+## Restore from backup
+
+**NOTE:**
+Replace `gitlab_web_1` to your container name, if necessary
+
+1. Stop the processes that are connected to the database 
+   ```shell
+   docker exec -it gitlab_web_1 gitlab-ctl stop puma
+   docker exec -it gitlab_web_1 gitlab-ctl stop sideki
+   ```
+2. Run the restore
+   ```shell
+   # replace "latest" to your custom file name, if necessary, e.g. "11493107454_2018_04_25_10.6.4-ce"
+   
+   docker exec -it gitlab_web_1 gitlab-backup restore BACKUP=latest
+   ```
+3. Reconfigure gitlab and restart your container
+
+   ```shell
+   docker exec -it gitlab_web_1 gitlab-ctl reconfigure
+   docker restart gitlab_web_1
+   ```
+
+## Back up
+
+File hook `hooks/backup.sh` will generate backup file on every event triggered in GitLab. If you want to create it manually, run the following command:
+
+**NOTE:**
+Replace `gitlab_web_1` to your container name, if necessary
+```shell
+docker exec -it gitlab-web-1 gitlab-rake file_hooks:validate
+```
+

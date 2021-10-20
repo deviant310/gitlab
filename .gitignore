@@ -1,10 +1,5 @@
-/config/**
-!/config/gitlab.rb
-!/config/gitlab-secrets.json
-/data/**
-!/data/backups
-!/data/backups/*_gitlab_backup.tar
-/logs
+# APP
+/.env
 
 # IDE
 .idea
