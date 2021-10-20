@@ -19,7 +19,7 @@ Replace `gitlab-web-1` to your container name, if necessary
    ```
 4. Add generated public key to authorized_keys on your host
    ```shell
-   docker exec -it gitlab-web-1 "cat /var/opt/gitlab/.ssh/id_rsa.pub" >> ~/.ssh/authorized_keys
+   docker exec -it gitlab-web-1 cat /var/opt/gitlab/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
    ```
    
 5. Reconfigure gitlab and restart your container
