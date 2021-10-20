@@ -11,7 +11,7 @@
    docker-compose up -d
    ```
 **NOTE:**
-Replace `gitlab_web_1` to your container name, if necessary
+Replace `gitlab-web-1` to your container name, if necessary
 
 3. Generate ssh keys inside the container
    ```shell
@@ -25,31 +25,31 @@ Replace `gitlab_web_1` to your container name, if necessary
 5. Reconfigure gitlab and restart your container
 
    ```shell
-   docker exec -it gitlab_web_1 gitlab-ctl reconfigure
-   docker restart gitlab_web_1
+   docker exec -it gitlab-web-1 gitlab-ctl reconfigure
+   docker restart gitlab-web-1
    ```
 
 ## Restore from backup
 
 **NOTE:**
-Replace `gitlab_web_1` to your container name, if necessary
+Replace `gitlab-web-1` to your container name, if necessary
 
 1. Stop the processes that are connected to the database 
    ```shell
-   docker exec -it gitlab_web_1 gitlab-ctl stop puma
-   docker exec -it gitlab_web_1 gitlab-ctl stop sideki
+   docker exec -it gitlab-web-1 gitlab-ctl stop puma
+   docker exec -it gitlab-web-1 gitlab-ctl stop sideki
    ```
 2. Run the restore
    ```shell
    # replace "latest" to your custom file name, if necessary, e.g. "11493107454_2018_04_25_10.6.4-ce"
    
-   docker exec -it gitlab_web_1 gitlab-backup restore BACKUP=latest
+   docker exec -it gitlab-web-1 gitlab-backup restore BACKUP=latest
    ```
 3. Reconfigure gitlab and restart your container
 
    ```shell
-   docker exec -it gitlab_web_1 gitlab-ctl reconfigure
-   docker restart gitlab_web_1
+   docker exec -it gitlab-web-1 gitlab-ctl reconfigure
+   docker restart gitlab-web-1
    ```
 
 ## Back up
@@ -57,7 +57,7 @@ Replace `gitlab_web_1` to your container name, if necessary
 File hook `hooks/backup.sh` will generate backup file on every event triggered in GitLab. Then it will send to VCS of this repository. If you want to do it manually, run the following command:
 
 **NOTE:**
-Replace `gitlab_web_1` to your container name, if necessary
+Replace `gitlab-web-1` to your container name, if necessary
 ```shell
 docker exec -it --user git gitlab-web-1 /opt/gitlab/embedded/service/gitlab-rails/file_hooks/backup.sh
 ```
