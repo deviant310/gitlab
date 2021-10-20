@@ -12,6 +12,7 @@
    ```
 **NOTE:**
 Replace `gitlab_web_1` to your container name, if necessary
+
 3. Generate ssh keys inside the container
    ```shell
    docker exec -it gitlab-web-1 ssh-keygen -q -t rsa -N '' -f /var/opt/gitlab/.ssh/id_rsa -C root@gitlab_web
