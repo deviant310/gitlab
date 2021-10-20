@@ -17,12 +17,18 @@ Replace `gitlab-web-1` to your container name, if necessary
    ```shell
    docker exec -it gitlab-web-1 ssh-keygen -q -t rsa -N '' -f /var/opt/gitlab/.ssh/id_rsa -C root@gitlab_web
    ```
-4. Add generated public key to authorized_keys on your host
+   
+4. Change owner of generated files to `git`
+   ```shell
+   docker exec -it gitlab-web-1 chown git:git /var/opt/gitlab/.ssh/id_rsa
+   docker exec -it gitlab-web-1 chown git:git /var/opt/gitlab/.ssh/id_rsa.pub
+   ```
+5. Add generated public key to authorized_keys on your host
    ```shell
    docker exec -it gitlab-web-1 cat /var/opt/gitlab/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
    ```
    
-5. Reconfigure gitlab and restart your container
+6. Reconfigure gitlab and restart your container
 
    ```shell
    docker exec -it gitlab-web-1 gitlab-ctl reconfigure
