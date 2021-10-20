@@ -37,7 +37,7 @@ Replace `gitlab-web-1` to your container name, if necessary
 1. Stop the processes that are connected to the database 
    ```shell
    docker exec -it gitlab-web-1 gitlab-ctl stop puma
-   docker exec -it gitlab-web-1 gitlab-ctl stop sideki
+   docker exec -it gitlab-web-1 gitlab-ctl stop sidekiq
    ```
 2. Run the restore
    ```shell
