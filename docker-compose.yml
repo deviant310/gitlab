@@ -1,7 +1,6 @@
 services:
   web:
-    build:
-      context: ./
+    image: gitlab/gitlab-ee:13.5.1-ee.0
     restart: always
     environment:
       APP_PATH: ${PATH}
@@ -15,11 +14,7 @@ services:
       - '${APP_HTTP_PORT}:80'
       - '${APP_SSH_PORT}:22'
     volumes:
-      - 'config:/etc/gitlab'
-      - 'data:/var/opt/gitlab'
-      - 'logs:/var/log/gitlab'
-
-volumes:
-  config:
-  data:
-  logs:
+      - './config:/etc/gitlab'
+      - './data:/var/opt/gitlab'
+      - './logs:/var/log/gitlab'
+      - './hooks:/opt/gitlab/embedded/service/gitlab-rails/file_hooks/'
