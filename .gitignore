@@ -1,18 +1,4 @@
 # APP
-/config/**
-!/config/gitlab.rb
-!/config/gitlab-secrets.json
-
-/data/**
-!/data/backups
-!/data/backups/*_gitlab_backup.tar
-
-/embedded/**
-!/embedded/service/gitlab-rails/file_hooks
-!/embedded/service/gitlab-rails/file_hooks/**
-
-/logs
-
 /.env
 
 # IDE
