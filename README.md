@@ -10,19 +10,26 @@
    ```shell
    docker-compose up -d
    ```
+   
 **NOTE:**
 Replace `gitlab-web-1` to your container name, if necessary
 
-3. Generate ssh keys inside the container
+3. Copy necessary data to your container
+   ```shell
+   for f in ./config/*; do docker cp $f gitlab-web-1:/etc/gitlab/; done
+   for f in ./backups/*; do docker cp $f gitlab-web-1:/var/opt/gitlab/backups/; done
+   for f in ./hooks/*; do docker cp $f gitlab-web-1:/opt/gitlab/embedded/service/gitlab-rails/file_hooks/; done
+   ```
+4. Generate ssh keys inside the container
    ```shell
    docker exec -it gitlab-web-1 ssh-keygen -q -t rsa -N '' -f /var/opt/gitlab/.ssh/id_rsa -C root@gitlab_web
    ```
-4. Add generated public key to authorized_keys on your host
+5. Add generated public key to authorized_keys on your host
    ```shell
    docker exec -it gitlab-web-1 cat /var/opt/gitlab/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
    ```
    
-5. Reconfigure gitlab and restart your container
+6. Reconfigure gitlab and restart your container
 
    ```shell
    docker exec -it gitlab-web-1 gitlab-ctl reconfigure

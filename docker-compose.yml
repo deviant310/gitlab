@@ -1,7 +1,6 @@
 services:
   web:
-    build:
-      context: ./
+    image: gitlab/gitlab-ee:13.5.1-ee.0
     restart: always
     environment:
       APP_PATH: ${PATH}
