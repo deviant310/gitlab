@@ -58,6 +58,10 @@ File hook `hooks/backup.sh` will generate backup file on every event triggered i
 **NOTE:**
 Replace `gitlab_web_1` to your container name, if necessary
 ```shell
+docker exec -it --user git gitlab-web-1 /opt/gitlab/embedded/service/gitlab-rails/file_hooks/backup.sh
+```
+or validate your file hooks (will execute all file hooks)
+
+```shell
 docker exec -it gitlab-web-1 gitlab-rake file_hooks:validate
 ```
-
