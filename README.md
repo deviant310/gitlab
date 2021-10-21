@@ -1,9 +1,9 @@
 # GitLab VCS + restore from backup + saving backup file hook
 
-## Installation with Docker
-
 **IMPORTANT:**
 Your gitlab environment will have access to your host environment via ssh and will try to push changes into this repo. So this repo shouldn't have any collaborators. After cloning this repo CHANGE remote origin on yours which you have access, so your host can push to your remote.
+
+## Installation with Docker
 
 1. Create `.env` file from `.env.example`, replace values if necessary.
    ```shell
