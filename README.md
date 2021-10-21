@@ -19,32 +19,22 @@ Your gitlab environment will have access to your host environment via ssh and wi
 **NOTE:**
 Replace `gitlab-web-1` to your container name, if necessary
 
-3. Copy necessary data to your container
-   ```shell
-   for f in ./hooks/*; do docker cp $f gitlab-web-1:/opt/gitlab/embedded/service/gitlab-rails/file_hooks/; done
-   ```
-
-4. Change owner of copied files
-   ```shell
-   docker exec -it gitlab-web-1 chown -R git:git /opt/gitlab/embedded/service/gitlab-rails/file_hooks/
-   ```
-
-5. Generate ssh keys inside the container
+3. Generate ssh keys inside the container
    ```shell
    docker exec -it gitlab-web-1 ssh-keygen -q -t rsa -N '' -f /var/opt/gitlab/.ssh/id_rsa -C root@gitlab_web
    ```
 
-6. Change owner of generated keys to `git`
+4. Change owner of generated keys to `git`
    ```shell
    docker exec -it gitlab-web-1 chown git:git /var/opt/gitlab/.ssh/id_rsa
    docker exec -it gitlab-web-1 chown git:git /var/opt/gitlab/.ssh/id_rsa.pub
    ```
-7. Add generated public key to authorized_keys on your host
+5. Add generated public key to authorized_keys on your host
    ```shell
    docker exec -it gitlab-web-1 cat /var/opt/gitlab/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
    ```
 
-8. Reconfigure gitlab and restart your container
+6. Reconfigure gitlab and restart your container
 
    ```shell
    docker exec -it gitlab-web-1 gitlab-ctl reconfigure
