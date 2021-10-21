@@ -2,10 +2,15 @@
 
 ## Installation with Docker
 
+**IMPORTANT:**
+Your gitlab environment will have access to your host environment via ssh and will try to push changes into this repo. So this repo shouldn't have any collaborators. After cloning this repo CHANGE remote origin on yours which you have access, so your host can push to your remote.
+
 1. Create `.env` file from `.env.example`, replace values if necessary.
    ```shell
    cp .env.example .env
    ```
+   At least you must change `APP_USER` value and set your host username
+
 2. Run the container
    ```shell
    docker-compose up -d
