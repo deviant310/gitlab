@@ -21,15 +21,11 @@ Replace `gitlab-web-1` to your container name, if necessary
 
 3. Copy necessary data to your container
    ```shell
-   for f in ./config/*; do docker cp $f gitlab-web-1:/etc/gitlab/; done
-   for f in ./backups/*; do docker cp $f gitlab-web-1:/var/opt/gitlab/backups/; done
    for f in ./hooks/*; do docker cp $f gitlab-web-1:/opt/gitlab/embedded/service/gitlab-rails/file_hooks/; done
    ```
    
-4. Change owner of generated files
+4. Change owner of copied files
    ```shell
-   docker exec -it gitlab-web-1 chown -R root:root /etc/gitlab/
-   docker exec -it gitlab-web-1 chown -R git:git /var/opt/gitlab/backups/
    docker exec -it gitlab-web-1 chown -R git:git /opt/gitlab/embedded/service/gitlab-rails/file_hooks/
    ```
    
@@ -60,18 +56,32 @@ Replace `gitlab-web-1` to your container name, if necessary
 **NOTE:**
 Replace `gitlab-web-1` to your container name, if necessary
 
-1. Stop the processes that are connected to the database 
+1. Copy data to your container
+   ```shell
+   for f in ./config/*; do docker cp $f gitlab-web-1:/etc/gitlab/; done
+   for f in ./backups/*; do docker cp $f gitlab-web-1:/var/opt/gitlab/backups/; done
+   ```
+   
+2. Change owner of copied files
+   ```shell
+   docker exec -it gitlab-web-1 chown -R root:root /etc/gitlab/
+   docker exec -it gitlab-web-1 chown -R git:git /var/opt/gitlab/backups/
+   ```
+   
+3. Stop the processes that are connected to the database 
    ```shell
    docker exec -it gitlab-web-1 gitlab-ctl stop puma
    docker exec -it gitlab-web-1 gitlab-ctl stop sidekiq
    ```
-2. Run the restore
+   
+4. Run the restore
    ```shell
    # replace "latest" to your custom file name, if necessary, e.g. "11493107454_2018_04_25_10.6.4-ce"
    
    docker exec -it gitlab-web-1 gitlab-backup restore BACKUP=latest
    ```
-3. Reconfigure gitlab and restart your container
+   
+5. Reconfigure gitlab and restart your container
 
    ```shell
    docker exec -it gitlab-web-1 gitlab-ctl reconfigure
