@@ -20,16 +20,30 @@ Replace `gitlab-web-1` to your container name, if necessary
    for f in ./backups/*; do docker cp $f gitlab-web-1:/var/opt/gitlab/backups/; done
    for f in ./hooks/*; do docker cp $f gitlab-web-1:/opt/gitlab/embedded/service/gitlab-rails/file_hooks/; done
    ```
-4. Generate ssh keys inside the container
+   
+4. Change owner of generated files
+   ```shell
+   docker exec -it gitlab-web-1 chown -R root:root /etc/gitlab/
+   docker exec -it gitlab-web-1 chown -R git:git /var/opt/gitlab/backups/
+   docker exec -it gitlab-web-1 chown -R git:git /opt/gitlab/embedded/service/gitlab-rails/file_hooks/
+   ```
+   
+5. Generate ssh keys inside the container
    ```shell
    docker exec -it gitlab-web-1 ssh-keygen -q -t rsa -N '' -f /var/opt/gitlab/.ssh/id_rsa -C root@gitlab_web
    ```
-5. Add generated public key to authorized_keys on your host
+
+6. Change owner of generated keys to `git`
+   ```shell
+   docker exec -it gitlab-web-1 chown git:git /var/opt/gitlab/.ssh/id_rsa
+   docker exec -it gitlab-web-1 chown git:git /var/opt/gitlab/.ssh/id_rsa.pub
+   ```
+7. Add generated public key to authorized_keys on your host
    ```shell
    docker exec -it gitlab-web-1 cat /var/opt/gitlab/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
    ```
    
-6. Reconfigure gitlab and restart your container
+8. Reconfigure gitlab and restart your container
 
    ```shell
    docker exec -it gitlab-web-1 gitlab-ctl reconfigure
