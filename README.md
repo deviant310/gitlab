@@ -15,7 +15,7 @@ Your gitlab environment will have access to your host environment via ssh and wi
    ```shell
    docker-compose up -d
    ```
-   
+
 **NOTE:**
 Replace `gitlab-web-1` to your container name, if necessary
 
@@ -23,12 +23,12 @@ Replace `gitlab-web-1` to your container name, if necessary
    ```shell
    for f in ./hooks/*; do docker cp $f gitlab-web-1:/opt/gitlab/embedded/service/gitlab-rails/file_hooks/; done
    ```
-   
+
 4. Change owner of copied files
    ```shell
    docker exec -it gitlab-web-1 chown -R git:git /opt/gitlab/embedded/service/gitlab-rails/file_hooks/
    ```
-   
+
 5. Generate ssh keys inside the container
    ```shell
    docker exec -it gitlab-web-1 ssh-keygen -q -t rsa -N '' -f /var/opt/gitlab/.ssh/id_rsa -C root@gitlab_web
@@ -43,7 +43,7 @@ Replace `gitlab-web-1` to your container name, if necessary
    ```shell
    docker exec -it gitlab-web-1 cat /var/opt/gitlab/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
    ```
-   
+
 8. Reconfigure gitlab and restart your container
 
    ```shell
@@ -56,32 +56,34 @@ Replace `gitlab-web-1` to your container name, if necessary
 **NOTE:**
 Replace `gitlab-web-1` to your container name, if necessary
 
-1. Copy data to your container
+1. Place your gitlab `.tar` backups in `backups` folder, and your `gitlab.rb`, `gitlab-secrets.json` in `config` folder.
+
+2. Copy data to your container
    ```shell
    for f in ./config/*; do docker cp $f gitlab-web-1:/etc/gitlab/; done
    for f in ./backups/*; do docker cp $f gitlab-web-1:/var/opt/gitlab/backups/; done
    ```
-   
-2. Change owner of copied files
+
+3. Change owner of copied files
    ```shell
    docker exec -it gitlab-web-1 chown -R root:root /etc/gitlab/
    docker exec -it gitlab-web-1 chown -R git:git /var/opt/gitlab/backups/
    ```
-   
-3. Stop the processes that are connected to the database 
+
+4. Stop the processes that are connected to the database
    ```shell
    docker exec -it gitlab-web-1 gitlab-ctl stop puma
    docker exec -it gitlab-web-1 gitlab-ctl stop sidekiq
    ```
-   
-4. Run the restore
+
+5. Run the restore
    ```shell
    # replace "latest" to your custom file name, if necessary, e.g. "11493107454_2018_04_25_10.6.4-ce"
    
    docker exec -it gitlab-web-1 gitlab-backup restore BACKUP=latest
    ```
-   
-5. Reconfigure gitlab and restart your container
+
+6. Reconfigure gitlab and restart your container
 
    ```shell
    docker exec -it gitlab-web-1 gitlab-ctl reconfigure
