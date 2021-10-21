@@ -4,13 +4,15 @@ services:
       context: ./
     restart: always
     environment:
-      APP_PATH: ${PATH}
-      APP_HOST: ${APP_HOST}
-      APP_USER: ${APP_USER}
-      APP_ROOT: ${PWD}
       GITLAB_OMNIBUS_CONFIG: |
         gitlab_rails['gitlab_shell_ssh_port'] = ${APP_SSH_PORT}
         gitlab_rails['gitlab_default_theme'] = 2
+        gitlab_rails['env'] = {
+          "APP_PATH" => ${PATH},
+          "APP_HOST" => ${APP_HOST},
+          "APP_USER" => ${APP_USER},
+          "APP_ROOT" => ${PWD}
+        }
     ports:
       - '${APP_HTTP_PORT}:80'
       - '${APP_SSH_PORT}:22'
