@@ -5,10 +5,10 @@ services:
     restart: always
     hostname: $APP_HOST
     environment:
-      APP_PATH: $APP_PATH
+      APP_PATH: $PATH
       APP_HOST: $APP_HOST
       APP_USER: $APP_USER
-      APP_ROOT: $APP_ROOT
+      APP_ROOT: $PWD
       GITLAB_OMNIBUS_CONFIG: |
         gitlab_rails['gitlab_shell_ssh_port'] = ${APP_SSH_PORT}
         gitlab_rails['gitlab_default_theme'] = 2
