@@ -5,6 +5,18 @@ Your gitlab environment will have access to your host environment via ssh and wi
 
 ## Installation with Docker
 
+0. Install OpenSSH server to your host machine
+   ```shell
+   sudo apt install openssh-server
+   ```
+   Allow authentication by public key. Uncomment line in your `/etc/ssh/sshd_config`:
+   ```text
+   PubkeyAuthentication yes
+   ```
+   Restart your ssh service
+   ```shell
+   sudo service ssh restart
+   ```
 1. Create `.env` file from `.env.example`, replace values if necessary.
    ```shell
    cp .env.example .env

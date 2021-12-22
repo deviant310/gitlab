@@ -3,20 +3,18 @@ services:
     build:
       context: ./
     restart: always
-    hostname: $APP_HOST
     environment:
-      APP_PATH: $PATH
-      APP_HOST: $APP_HOST
-      APP_USER: $APP_USER
-      APP_ROOT: $PWD
+      APP_ROOT_USERNAME: $APP_ROOT_USERNAME
+      APP_SHELL_PATH: $PATH
+      APP_HOME_DIR: $PWD
       GITLAB_OMNIBUS_CONFIG: |
+        external_url '${EXTERNAL_URL}'
         gitlab_rails['gitlab_shell_ssh_port'] = ${APP_SSH_PORT}
         gitlab_rails['gitlab_default_theme'] = 2
         gitlab_rails['env'] = {
-          "APP_PATH" => "${PATH}",
-          "APP_HOST" => "${APP_HOST}",
-          "APP_USER" => "${APP_USER}",
-          "APP_ROOT" => "${PWD}"
+          "APP_ROOT_USERNAME" => "${APP_ROOT_USERNAME}",
+          "APP_SHELL_PATH" => "${PATH}",
+          "APP_HOME_DIR" => "${PWD}"
         }
     ports:
       - '${APP_HTTP_PORT}:80'
@@ -25,6 +23,8 @@ services:
       - 'config:/etc/gitlab'
       - 'data:/var/opt/gitlab'
       - 'logs:/var/log/gitlab'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
 
 volumes:
   config:
