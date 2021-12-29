@@ -64,7 +64,7 @@ CONTAINER=gitlab-web-1 ./restore.sh
 
 ## Back up
 
-File hook `hooks/backup.sh` will generate backup file on every event triggered in GitLab. Then it will send to VCS of this repository. If you want to do it manually, run the following command:
+File hook `hooks/backup.sh` will generate backup file on every event triggered in GitLab. Then it will be sent to VCS of this repository. If you want to do it manually, run the following command:
 
 **NOTE:**
 Replace `gitlab-web-1` to your container name, if necessary
