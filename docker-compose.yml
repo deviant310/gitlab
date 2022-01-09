@@ -2,6 +2,10 @@ services:
   web:
     build:
       context: ./
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 10m
     restart: always
     environment:
       APP_ROOT_USERNAME: $APP_ROOT_USERNAME
