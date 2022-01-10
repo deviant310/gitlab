@@ -20,6 +20,8 @@ services:
           "APP_SHELL_PATH" => "${PATH}",
           "APP_HOME_DIR" => "${PWD}"
         }
+        sidekiq['concurrency'] = 1
+        unicorn['worker_processes'] = 1
     ports:
       - '${APP_HTTP_PORT}:80'
       - '${APP_SSH_PORT}:22'
