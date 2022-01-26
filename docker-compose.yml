@@ -21,7 +21,6 @@ services:
           "APP_HOME_DIR" => "${PWD}"
         }
         postgresql['shared_buffers'] = "256MB"
-        sidekiq['max_concurrency'] = 4
     ports:
       - '${APP_HTTP_PORT}:80'
       - '${APP_SSH_PORT}:22'
