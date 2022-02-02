@@ -26,6 +26,7 @@ services:
       - '${APP_SSH_PORT}:22'
     volumes:
       - 'data:/var/opt/gitlab'
+      -  '/var/opt/gitlab/backups'
       - 'logs:/var/log/gitlab'
     extra_hosts:
       - 'host.docker.internal:host-gateway'
